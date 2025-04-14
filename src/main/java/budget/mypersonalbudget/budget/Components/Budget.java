@@ -1,9 +1,11 @@
 package budget.mypersonalbudget.budget.Components;
 
+import budget.mypersonalbudget.budget.Components.BudgetDto.BudgetDto;
+
 import java.util.HashMap;
 
 public class Budget {
-    public static final HashMap<Integer, BudgetRecord> recordHashMap = new HashMap<Integer, BudgetRecord>();
+    public static final HashMap<Integer, BudgetDto> recordHashMap = new HashMap<Integer, BudgetDto>();
 
 
     private int getNextId() {

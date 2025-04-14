@@ -1,9 +1,9 @@
-package budget.mypersonalbudget.budget.Components;
+package budget.mypersonalbudget.budget.Components.BudgetDto;
 
 import lombok.Getter;
 import lombok.Setter;
 
-public class BudgetRecord {
+public class BudgetDto {
     private int id;
     @Getter
     double sum;
@@ -15,7 +15,7 @@ public class BudgetRecord {
     @Getter
     final String category;
 
-    public BudgetRecord(double sum, String data, String info, String category) {
+    public BudgetDto(double sum, String data, String info, String category) {
         this.sum = sum;
         this.data = data;
         this.info = info;
