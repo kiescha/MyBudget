@@ -21,4 +21,8 @@ public class BudgetRecord {
         this.info = info;
         this.category = category;
     }
+
+    public double changeInBalance() {
+        return getSum();
+    }
 }

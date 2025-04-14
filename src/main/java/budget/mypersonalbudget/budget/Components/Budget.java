@@ -3,7 +3,7 @@ package budget.mypersonalbudget.budget.Components;
 import java.util.HashMap;
 
 public class Budget {
-    static final HashMap<Integer, BudgetRecord> recordHashMap = new HashMap<Integer, BudgetRecord>();
+    public static final HashMap<Integer, BudgetRecord> recordHashMap = new HashMap<Integer, BudgetRecord>();
 
 
     private int getNextId() {
