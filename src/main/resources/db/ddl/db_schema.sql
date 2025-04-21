@@ -1,57 +1,60 @@
-Table users {
-  user_id int [primary key]
-  name varchar
-  email varchar
-  password_hash varchar
-}
+CREATE TABLE "users" (
+                         "user_id" int PRIMARY KEY,
+                         "name" varchar,
+                         "email" varchar,
+                         "password_hash" varchar
+);
 
-Table budgets {
-  budget_id int [primary key]
-  user_id int
-  name varchar
-  start_date date
-  end_date date
-}
+CREATE TABLE "budgets" (
+                           "budget_id" int PRIMARY KEY,
+                           "user_id" int,
+                           "name" varchar,
+                           "start_date" date,
+                           "end_date" date
+);
 
-Table accounts {
-  account_id int [primary key]
-  user_id int
-  cash decimal
-  balance decimal
-  bank_id int
-}
-Table bank {
-  bank_id int [primary key]
-  name varchar
-  card varchar
-}
+CREATE TABLE "accounts" (
+                            "account_id" int PRIMARY KEY,
+                            "user_id" int,
+                            "cash" decimal,
+                            "balance" decimal,
+                            "bank_id" int
+);
 
-Table categories {
-  category_id int [primary key]
-  food varchar
-  rent varchar
-  salary varchar
-  other varchar
-}
+CREATE TABLE "bank" (
+                        "bank_id" int PRIMARY KEY,
+                        "name" varchar,
+                        "card" varchar
+);
 
+CREATE TABLE "categories" (
+                              "category_id" int PRIMARY KEY,
+                              "food" varchar,
+                              "rent" varchar,
+                              "salary" varchar,
+                              "other" varchar
+);
 
-Table transactions {
-  transaction_id int [primary key]
-  budget_id int
-  account_id int
-  category_id int
-  amount decimal
-  income double
-  expense double
-  date date
-  description text
+CREATE TABLE "transactions" (
+                                "transaction_id" int PRIMARY KEY,
+                                "budget_id" int,
+                                "account_id" int,
+                                "category_id" int,
+                                "amount" decimal,
+                                "income" double,
+                                "expense" double,
+                                "date" date,
+                                "description" text
+);
 
-}
-ref: budgets.budget_id > users.user_id
-ref: accounts.account_id > users.user_id
-ref: transactions.category_id > categories.category_id
-ref: transactions.budget_id < budgets.budget_id
-ref: transactions.account_id > accounts.account_id
-ref: accounts.bank_id < bank.bank_id
+ALTER TABLE "budgets" ADD FOREIGN KEY ("budget_id") REFERENCES "users" ("user_id");
 
+ALTER TABLE "accounts" ADD FOREIGN KEY ("account_id") REFERENCES "users" ("user_id");
 
+ALTER TABLE "transactions" ADD FOREIGN KEY ("category_id") REFERENCES "categories" ("category_id");
+
+ALTER TABLE "budgets" ADD FOREIGN KEY ("budget_id") REFERENCES "transactions" ("budget_id");
+
+ALTER TABLE "transactions" ADD FOREIGN KEY ("account_id") REFERENCES "accounts" ("account_id");
+
+ALTER TABLE "bank" ADD FOREIGN KEY ("bank_id") REFERENCES "accounts" ("bank_id");

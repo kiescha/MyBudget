@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: MyPersonalBudget
+  main:
+    banner-mode: console
+  h2:
+    console:
+      path: /budget_h2
+      enabled: true
+  datasource:
+    url: jdbc:h2:mem:budget_db
+    driver-class-name: org.h2.Driver
+    username: a
+    password: password
+  sql:
+    init:
+      schema-locations: db/ddl/db_schema.sql
+      data-locations: db/dml/db_data.sql
