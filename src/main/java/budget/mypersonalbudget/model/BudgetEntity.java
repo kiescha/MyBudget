@@ -1,9 +1,10 @@
 package budget.mypersonalbudget.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.List;
 
 @Getter
 @Setter
@@ -14,6 +15,9 @@ public class BudgetEntity {
     private String budgetName;
     private int startDate;
     private int endDate;
+
+    @OneToMany(mappedBy = "budget")
+    private List<BudgetUserEntity> users;
 
     public void setBudgetId(Long budgetId) {
         this.budgetId = budgetId;

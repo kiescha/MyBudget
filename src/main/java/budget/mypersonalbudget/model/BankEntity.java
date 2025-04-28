@@ -1,9 +1,10 @@
 package budget.mypersonalbudget.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.List;
 
 @Getter
 @Setter
@@ -12,6 +13,10 @@ public class BankEntity {
     @Id
     private long bankId;
     private String bankName;
+    @OneToMany
+    private List<UserEntity> user;
+    @OneToMany
+    private List<CardEntity> card;
 
     public void setBankId(Long bankId) {
         this.bankId = bankId;

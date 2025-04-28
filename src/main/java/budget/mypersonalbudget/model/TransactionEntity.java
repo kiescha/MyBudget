@@ -14,4 +14,8 @@ public class TransactionEntity {
     private double amount;
     private String date;
     private String description;
+    private BudgetEntity budget;
+    private TransactionTypeEntity type;
+    private CategoryEntity category;
+
 }

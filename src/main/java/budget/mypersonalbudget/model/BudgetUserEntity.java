@@ -2,6 +2,8 @@ package budget.mypersonalbudget.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,6 +14,14 @@ public class BudgetUserEntity {
     @Id
     private long budgetUserId;
 
+    @ManyToOne
+    @JoinColumn(name = "user_user_id")
+    private UserEntity user;
+
+    @ManyToOne
+    @JoinColumn(name = "budget_budget_id")
+    private BudgetEntity budget;
+
     public void setBudgetUserId(Long budgetUserId) {
         this.budgetUserId = budgetUserId;
     }
@@ -19,6 +29,4 @@ public class BudgetUserEntity {
     public Long getBudgetUserId() {
         return budgetUserId;
     }
-    //something for user_id
-    //something for budget_id
 }
