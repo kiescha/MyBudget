@@ -45,9 +45,9 @@ CREATE TABLE `category` (
 );
 
 CREATE TABLE `transaction` (
+                               `transaction_id` int PRIMARY KEY,
                                `budget_id` int,
                                `transactionType_id` int,
-                               `category_id` int,
                                `amount` decimal,
                                `income` double,
                                `expense` double,
@@ -71,7 +71,7 @@ ALTER TABLE `budget` ADD FOREIGN KEY (`budget_id`) REFERENCES `budget_user` (`bu
 
 ALTER TABLE `user` ADD FOREIGN KEY (`user_id`) REFERENCES `budget_user` (`user_id`);
 
-ALTER TABLE `transaction` ADD FOREIGN KEY (`category_id`) REFERENCES `category` (`category_id`);
+ALTER TABLE `transaction` ADD FOREIGN KEY (`transaction_id`) REFERENCES `category` (`category_id`);
 
 ALTER TABLE `transaction` ADD FOREIGN KEY (`budget_id`) REFERENCES `budget` (`budget_id`);
 
