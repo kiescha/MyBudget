@@ -27,7 +27,7 @@ CREATE TABLE `otherBank` (
 
 CREATE TABLE `bankAccount` (
                                `bank_id` varchar(255),
-                               `bankAcount_name` varchar(255)
+                               `bankAccount_name` varchar(255)
 );
 
 CREATE TABLE `bank` (
