@@ -1,23 +1,23 @@
 package budget.mypersonalbudget.model;
 
+
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDate;
-
-
 @Getter
 @Setter
 @Entity
-@Table(name="budget")
-public class BudgetEntity {
+@Table(name="bank")
+public class BankEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long budgetId;
+    private long bankId;
 
     private String name;
-    private LocalDate startDate;
-    private LocalDate endDate;
+
+    @ManyToOne
+    @JoinColumn(name="card_id", nullable = false)
+    private CardEntity card;
 }
