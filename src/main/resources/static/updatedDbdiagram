@@ -1,0 +1,79 @@
+// Users
+Table user {
+  user_id INT [pk, increment]
+  nick_name VARCHAR(255)
+  email VARCHAR(255) [unique]
+  password_hash VARCHAR(255)
+}
+
+// Budgets
+Table budget {
+  budget_id INT [pk, increment]
+  name VARCHAR(255)
+  start_date DATE
+  end_date DATE
+}
+
+// Link table: Budget shared with multiple users
+Table budget_user {
+  budget_user_id INT [pk, increment]
+  user_id INT [ref: > user.user_id]
+  budget_id INT [ref: > budget.budget_id]
+  role ENUM('owner', 'editor', 'viewer')
+}
+
+// Categories
+Table category {
+  category_id INT [pk, increment]
+  name VARCHAR(255)
+}
+
+// Cards
+Table card {
+  card_id INT [pk, increment]
+  card_name VARCHAR(255)
+  card_type VARCHAR(255)
+}
+
+// Banks
+Table bank {
+  bank_id INT [pk, increment]
+  name VARCHAR(255)
+  card_id INT [ref: > card.card_id]
+}
+
+// Bank Accounts (owned by users)
+Table bank_account {
+  bank_account_id INT [pk, increment]
+  account_name VARCHAR(255)
+  user_id INT [ref: > user.user_id]
+  bank_id INT [ref: > bank.bank_id]
+}
+
+// Other Bank Providers (e.g. digital wallets)
+Table other_bank {
+  other_bank_id INT [pk, increment]
+  name VARCHAR(255)
+}
+
+// Payment Method per transaction
+Table payment_method {
+  method_id INT [pk, increment]
+  type ENUM('cash', 'bank', 'otherBank')
+  bank_account_id INT [ref: > bank_account.bank_account_id]
+  other_bank_id INT [ref: > other_bank.other_bank_id]
+}
+
+// Transactions
+Table transaction {
+  transaction_id INT [pk, increment]
+  budget_id INT [ref: > budget.budget_id]
+  user_id INT [ref: > user.user_id] // who created it
+  method_id INT [ref: > payment_method.method_id]
+  category_id INT [ref: > category.category_id]
+  amount DECIMAL(10,2)
+  income DECIMAL(10,2)
+  expense DECIMAL(10,2)
+  date DATE
+  description TEXT
+}
