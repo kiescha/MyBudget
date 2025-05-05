@@ -8,7 +8,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name="card")
+@Table(name = "card")
 public class CardEntity {
 
     @Id
@@ -16,5 +16,5 @@ public class CardEntity {
     private long cardId;
 
     private String name;
-    private String type;
+    private String cardType;
 }

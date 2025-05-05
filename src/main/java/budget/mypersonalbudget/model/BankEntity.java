@@ -8,7 +8,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name="bank")
+@Table(name = "bank")
 public class BankEntity {
 
     @Id
@@ -18,6 +18,6 @@ public class BankEntity {
     private String name;
 
     @ManyToOne
-    @JoinColumn(name="card_id", nullable = false)
+    @JoinColumn(name = "card_id", nullable = false)
     private CardEntity card;
 }
