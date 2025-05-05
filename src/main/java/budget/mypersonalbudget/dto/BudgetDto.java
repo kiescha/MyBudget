@@ -1,8 +1,6 @@
 package budget.mypersonalbudget.dto;
 
-public class BudgetDto {
-    private long budgetId;
-    private String budgetName;
-    private int startDate;
-    private int endDate;
+import java.time.LocalDate;
+
+public record BudgetDto(long budgetId, String name, LocalDate startDate, LocalDate endDate) {
 }

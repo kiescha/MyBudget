@@ -1,9 +1,9 @@
 -- 1. Enum for user roles
-CREATE TYPE user_role AS ENUM ('owner', 'editor', 'viewer');
+CREATE TYPE client_role AS ENUM ('owner', 'editor', 'viewer');
 
 -- 2. Users
-CREATE TABLE "user" (
-                        user_id SERIAL PRIMARY KEY,
+CREATE TABLE client (
+                        client_id SERIAL PRIMARY KEY,
                         nick_name VARCHAR(255),
                         email VARCHAR(255) UNIQUE,
                         password_hash VARCHAR(255)
@@ -18,14 +18,14 @@ CREATE TABLE budget (
 );
 
 -- 4. Budget <-> User join with role
-CREATE TABLE budget_user (
-                             budget_user_id SERIAL PRIMARY KEY,
-                             user_id INT NOT NULL,
+CREATE TABLE budget_client (
+                             budget_client_id SERIAL PRIMARY KEY,
+                             client_id INT NOT NULL,
                              budget_id INT NOT NULL,
-                             role user_role DEFAULT 'viewer',
-                             CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES "user" (user_id),
+                             role client_role DEFAULT 'viewer',
+                             CONSTRAINT fk_user FOREIGN KEY (client_id) REFERENCES client (client_id),
                              CONSTRAINT fk_budget FOREIGN KEY (budget_id) REFERENCES budget (budget_id),
-                             UNIQUE (user_id, budget_id)
+                             UNIQUE (client_id, budget_id)
 );
 
 -- 5. Categories
@@ -53,9 +53,9 @@ CREATE TABLE bank (
 CREATE TABLE bank_account (
                               bank_account_id SERIAL PRIMARY KEY,
                               account_name VARCHAR(255),
-                              user_id INT NOT NULL,
+                              client_id INT NOT NULL,
                               bank_id INT,
-                              FOREIGN KEY (user_id) REFERENCES "user"(user_id),
+                              FOREIGN KEY (client_id) REFERENCES client(client_id),
                               FOREIGN KEY (bank_id) REFERENCES bank(bank_id)
 );
 
@@ -81,7 +81,7 @@ CREATE TABLE payment_method (
 CREATE TABLE transaction (
                              transaction_id SERIAL PRIMARY KEY,
                              budget_id INT NOT NULL,
-                             user_id INT NOT NULL,
+                             client_id INT NOT NULL,
                              method_id INT,
                              category_id INT,
                              amount DECIMAL(10,2) NOT NULL,
@@ -90,7 +90,7 @@ CREATE TABLE transaction (
                              date DATE,
                              description TEXT,
                              FOREIGN KEY (budget_id) REFERENCES budget(budget_id),
-                             FOREIGN KEY (user_id) REFERENCES "user"(user_id),
+                             FOREIGN KEY (client_id) REFERENCES client(client_id),
                              FOREIGN KEY (method_id) REFERENCES payment_method(method_id),
                              FOREIGN KEY (category_id) REFERENCES category(category_id)
 );
