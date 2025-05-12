@@ -1,12 +1,27 @@
-<!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>My budget</title>
+    <title>Budget</title>
 </head>
 <body>
+<h3>Let's create a transaction:</h3>
+<form th:action="@{/budget}" method="post" th:object="${transaction}">
+    <label>Income:</label>
+    <input type="text" placeholder="income" th:field="*{income}"><br/>
 
-<h1>My budget</h1>
+    <label>Expense:</label>
+    <input type="text" placeholder="expense" th:field="*{expense}"><br/>
 
+    <label>Amount:</label>
+    <input type="text" placeholder="product amount" th:field="*{amount}"><br/>
+
+    <label>Description:</label>
+    <input type="text" placeholder="description" th:field="*{description}"><br/>
+
+    <label>Category:</label>
+    <input type="text" placeholder="category" th:field="*{category}"><br/>
+
+    <button type="submit">Submit</button>
+</form>
 </body>
 </html>

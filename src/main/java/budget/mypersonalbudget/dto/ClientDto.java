@@ -1,7 +1,7 @@
 package budget.mypersonalbudget.dto;
 
 public record ClientDto(
-        long userId,
+        long id,
         String nickName,
         String email,
         String password) {
