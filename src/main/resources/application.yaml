@@ -11,8 +11,11 @@ spring:
     url: jdbc:h2:mem:budget_db
     driver-class-name: org.h2.Driver
     username: a
-    password: password
+    password: a
+  jpa:
+    hibernate:
+      ddl-auto: validate
   sql:
     init:
-      schema-locations: db/ddl/db_schema.sql
-      data-locations: db/dml/db_data.sql
+      schema-locations: classpath:db/ddl/db_schema_h2.sql
+#      data-locations: classpath:db/dml/db_data.sql
