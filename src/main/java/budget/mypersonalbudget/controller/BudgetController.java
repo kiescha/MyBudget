@@ -17,7 +17,7 @@ public class BudgetController {
 
     @GetMapping("/budget")
     public String openMyBudget(Model model) {
-        model.addAttribute("transaction", new TransactionDto());
+        model.addAttribute("transaction", TransactionDto.builder().build());
         return "budget";
     }
 
