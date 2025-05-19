@@ -4,6 +4,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Getter
@@ -11,9 +12,9 @@ import java.time.LocalDateTime;
 @Builder
 public class TransactionEntity {
     private long id;
-    private double amount;
-    private double income;
-    private double expense;
+    private boolean income;
+    private String category;
+    private BigDecimal amount;
     private String description;
     private LocalDateTime date;
 }

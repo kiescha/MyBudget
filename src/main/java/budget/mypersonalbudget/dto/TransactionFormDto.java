@@ -3,21 +3,19 @@ package budget.mypersonalbudget.dto;
 import lombok.*;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 
-@Setter
+
 @Getter
+@Setter
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class TransactionDto {
-    private long id;
-    private boolean income; //true=income, false=expense.
+public class TransactionFormDto {
+    private boolean income;
     private String category;
     private BigDecimal amount;
     private String description;
-    private LocalDateTime date;
+    private String date;
+
 }
-
-

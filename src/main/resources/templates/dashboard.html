@@ -1,0 +1,27 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Budget</title>
+</head>
+<body>
+<h3>Let's create a transaction:</h3>
+<form th:action="@{/transaction}" method="post" th:object="${transaction}">
+    <label>Amount:</label>
+    <input type="text" th:field="*{amount}" /><br/>
+
+    <label>Type:</label>
+    <input type="radio" th:field="*{income}" value="true" /> Income
+    <input type="radio" th:field="*{income}" value="false" /> Expense<br/>
+
+    <label>Category:</label>
+    <input type="text" th:field="*{category}" /><br/>
+
+    <label>Description:</label>
+    <input type="text" th:field="*{description}" /><br/>
+
+    <input type="datetime-local" th:field="*{date}" />
+
+    <button type="submit">Submit</button>
+</form>
+</body>
+</html>

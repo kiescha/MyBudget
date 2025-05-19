@@ -1,5 +1,5 @@
 package budget.mypersonalbudget.repository;
-import budget.mypersonalbudget.dto.TransactionDto;
+
 import budget.mypersonalbudget.model.TransactionEntity;
 import org.springframework.stereotype.Repository;
 
@@ -18,5 +18,4 @@ public class BudgetRepository {
     public List<TransactionEntity> getAllTransactions() {
         return transactions;
     }
-
 }
