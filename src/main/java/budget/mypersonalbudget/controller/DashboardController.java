@@ -3,8 +3,7 @@ package budget.mypersonalbudget.controller;
 
 import budget.mypersonalbudget.dto.DashboardDto;
 import budget.mypersonalbudget.dto.TransactionDto;
-import budget.mypersonalbudget.dto.TransactionFormDto;
-import budget.mypersonalbudget.mapper.TransactionMapper;
+import budget.mypersonalbudget.mapper.TransactionDtoMapper;
 import budget.mypersonalbudget.service.BudgetService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -20,26 +19,29 @@ import java.time.LocalDateTime;
 public class DashboardController {
 
     private final BudgetService budgetService;
-    private final TransactionMapper transactionMapper;
+    private final TransactionDtoMapper transactionDtoMapper;
 
     @GetMapping("/dashboard")
     public String showDashboard(Model model) {
-        model.addAttribute("transaction", new TransactionDto());
+        TransactionDto transactionDto = new TransactionDto();
+        transactionDto.setDate(LocalDateTime.now()); // Set default date to now
+        
+        model.addAttribute("transaction", transactionDto);
         model.addAttribute("dashboard", DashboardDto.builder()
-                .transactionDtoList(budgetService.getAllTransactions())
-//                .balance(budgetService.calculateBalance())
+                        .transactionDtoList(budgetService.getAllTransactions())
                 .build());
         return "dashboard";
     }
 
 
     @PostMapping("/transaction")
-    public String createTransaction(@ModelAttribute("transactionForm") TransactionFormDto transactionFormDto) {
-
-        TransactionDto dto = transactionMapper.fromTransactionFormDto(transactionFormDto);
-        budgetService.save(dto);
+    public String createTransaction(@ModelAttribute("transaction") TransactionDto transaction) {
+        // If date is null, set it to current time
+        if (transaction.getDate() == null) {
+            transaction.setDate(LocalDateTime.now());
+        }
+        
+        budgetService.save(transactionDtoMapper.toTransaction(transaction));
         return "redirect:/dashboard";
     }
-
-
 }

@@ -1,21 +1,28 @@
 package budget.mypersonalbudget.repository;
 
+import budget.mypersonalbudget.core.domain.Transaction;
+import budget.mypersonalbudget.mapper.TransactionEntityMapper;
 import budget.mypersonalbudget.model.TransactionEntity;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
 
+
 @Repository
+@RequiredArgsConstructor
 public class BudgetRepository {
 
-    private final List<TransactionEntity> transactions = new ArrayList<>();
+    private final TransactionEntityMapper transactionEntityMapper;
 
-    public void save(final TransactionEntity transactionDto) {
-        transactions.add(transactionDto);
+    private final List<TransactionEntity> transactionEntities = new ArrayList<>();
+
+    public void save(final Transaction transaction) {
+        transactionEntities.add(transactionEntityMapper.toTransactionEntity(transaction));
     }
 
-    public List<TransactionEntity> getAllTransactions() {
-        return transactions;
+    public List<Transaction> findAll() {
+        return transactionEntities.stream().map(transactionEntityMapper::toTransaction).toList();
     }
 }

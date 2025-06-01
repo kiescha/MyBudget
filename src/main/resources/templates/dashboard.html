@@ -4,6 +4,31 @@
     <title>Budget</title>
 </head>
 <body>
+<h3>Transactions:</h3>
+<div th:if="${dashboard.transactionDtoList.isEmpty()}">No transactions yet</div>
+<div th:unless="${dashboard.transactionDtoList.isEmpty()}">
+    <table>
+        <thead>
+        <tr>
+            <th>Amount</th>
+            <th>Type</th>
+            <th>Category</th>
+            <th>Description</th>
+            <th>Date</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="transaction : ${dashboard.transactionDtoList}">
+            <td th:text="${transaction.amount}"></td>
+            <td th:text="${transaction.type != null && transaction.type ? 'Income' : 'Expense'}"></td>
+            <td th:text="${transaction.category}"></td>
+            <td th:text="${transaction.description}"></td>
+            <td th:text="${#temporals.format(transaction.date, 'yyyy-MM-dd HH:mm')}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
 <h3>Let's create a transaction:</h3>
 <form th:action="@{/transaction}" method="post" th:object="${transaction}">
     <label>Amount:</label>
@@ -19,6 +44,7 @@
     <label>Description:</label>
     <input type="text" th:field="*{description}" /><br/>
 
+    <label>Date:</label>
     <input type="datetime-local" th:field="*{date}" />
 
     <button type="submit">Submit</button>

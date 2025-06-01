@@ -1,5 +1,6 @@
 package budget.mypersonalbudget.dto;
 
+import budget.mypersonalbudget.core.domain.Transaction;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -14,6 +15,6 @@ import java.util.List;
 @Builder
 
 public class DashboardDto {
-    private List<TransactionDto> transactionDtoList;
+    private List<Transaction> transactionDtoList;
     BigDecimal balance;
 }

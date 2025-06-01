@@ -1,8 +1,9 @@
 package budget.mypersonalbudget.service;
 
 
+import budget.mypersonalbudget.core.domain.Transaction;
 import budget.mypersonalbudget.dto.TransactionDto;
-import budget.mypersonalbudget.mapper.TransactionMapper;
+import budget.mypersonalbudget.mapper.TransactionEntityMapper;
 import budget.mypersonalbudget.repository.BudgetRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,16 +15,13 @@ import java.util.List;
 public class BudgetService {
 
     private final BudgetRepository budgetRepository;
-    private final TransactionMapper transactionMapper;
+    private final TransactionEntityMapper transactionMapper;
 
-    public void save(final TransactionDto transactionDto) {
-        budgetRepository.save(transactionMapper.toTransactionEntity(transactionDto));
+    public void save(final Transaction transaction) {
+        budgetRepository.save(transaction);
     }
 
-    public List<TransactionDto> getAllTransactions() {
-        return budgetRepository.getAllTransactions()
-                .stream()
-                .map(transactionMapper::toTransactionDto)
-                .toList();
+    public List<Transaction> getAllTransactions() {
+        return budgetRepository.findAll();
     }
 }
