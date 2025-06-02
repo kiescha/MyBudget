@@ -25,7 +25,7 @@ public class TransactionDtoMapper {
                 .amount(transaction.getAmount())
                 .category(transaction.getCategory())
                 .description(transaction.getDescription())
-                .type(transaction.getType() != null ? transaction.getType() : TransactionTypeEnum.EXPENSE)
+                .type(transaction.getType())
                 .date(transaction.getDate())
                 .build();
         return transactionDto;

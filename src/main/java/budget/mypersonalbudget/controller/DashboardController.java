@@ -36,7 +36,7 @@ public class DashboardController {
 
     @PostMapping("/transaction")
     public String createTransaction(@ModelAttribute("transaction") TransactionDto transaction) {
-        // If date is null, set it to current time
+
         if (transaction.getDate() == null) {
             transaction.setDate(LocalDateTime.now());
         }

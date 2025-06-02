@@ -20,7 +20,7 @@
         <tbody>
         <tr th:each="transaction : ${dashboard.transactionDtoList}">
             <td th:text="${transaction.amount}"></td>
-            <td th:text="${transaction.type != null && transaction.type ? 'Income' : 'Expense'}"></td>
+            <td th:text="${transaction.type != null && transaction.type.name() == 'INCOME' ? 'Income' : 'Expense'}"></td>
             <td th:text="${transaction.category}"></td>
             <td th:text="${transaction.description}"></td>
             <td th:text="${#temporals.format(transaction.date, 'yyyy-MM-dd HH:mm')}"></td>
@@ -35,8 +35,8 @@
     <input type="text" th:field="*{amount}" /><br/>
 
     <label>Type:</label>
-    <input type="radio" th:field="*{income}" value="true" /> Income
-    <input type="radio" th:field="*{income}" value="false" /> Expense<br/>
+    <input type="radio" th:field="*{type}" th:value="INCOME" /> Income
+    <input type="radio" th:field="*{type}" th:value="EXPENSE" /> Expense<br/>
 
     <label>Category:</label>
     <input type="text" th:field="*{category}" /><br/>
