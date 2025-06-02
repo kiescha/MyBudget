@@ -1,18 +1,20 @@
 package budget.mypersonalbudget.model;
 
+import budget.mypersonalbudget.core.domain.TransactionType;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Getter
 @Setter
 @Builder
 public class TransactionEntity {
-    private long id;
-    private boolean income;
+    private UUID id;
+    private TransactionType type;
     private String category;
     private BigDecimal amount;
     private String description;

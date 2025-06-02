@@ -1,6 +1,7 @@
 package budget.mypersonalbudget.mapper;
 
 import budget.mypersonalbudget.core.domain.Transaction;
+import budget.mypersonalbudget.core.domain.TransactionType;
 import budget.mypersonalbudget.dto.TransactionDto;
 import org.springframework.stereotype.Component;
 
@@ -9,24 +10,24 @@ public class TransactionDtoMapper {
 
     public Transaction toTransaction(final TransactionDto transactionDto) {
         return Transaction.builder()
+                .id(transactionDto.getId())
                 .amount(transactionDto.getAmount())
                 .category(transactionDto.getCategory())
                 .description(transactionDto.getDescription())
                 .date(transactionDto.getDate())
-                .type(transactionDto.isIncome())
+                .type(transactionDto.getType())
                 .build();
     }
     
     public TransactionDto toTransactionDto(final Transaction transaction) {
-        TransactionDto dto = TransactionDto.builder()
+        TransactionDto transactionDto = TransactionDto.builder()
+                .id(transaction.getId())
                 .amount(transaction.getAmount())
                 .category(transaction.getCategory())
                 .description(transaction.getDescription())
+                .type(transaction.getType() != null ? transaction.getType() : TransactionType.EXPENSE)
                 .date(transaction.getDate())
                 .build();
-                
-        dto.setIncome(transaction.getType() != null ? transaction.getType() : false);
-        
-        return dto;
+        return transactionDto;
     }
 }

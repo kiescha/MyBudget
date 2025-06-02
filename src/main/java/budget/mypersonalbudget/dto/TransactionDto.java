@@ -1,10 +1,12 @@
 package budget.mypersonalbudget.dto;
 
+import budget.mypersonalbudget.core.domain.TransactionType;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Setter
 @Getter
@@ -13,8 +15,8 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 public class TransactionDto {
-    private long id;
-    private boolean income; //true=income, false=expense.
+    private UUID id;
+    private TransactionType type;
     private String category;
     private BigDecimal amount;
     private String description;
