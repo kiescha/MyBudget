@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.UUID;
 
 
 @Service
@@ -25,6 +26,14 @@ public class BudgetService {
 
     public List<Transaction> getAllTransactions() {
         return budgetRepository.findAll();
+    }
+
+    public Transaction getTransactionById(final UUID id) {
+        return budgetRepository.findById(id).orElse(null);
+    }
+
+    public void updateTransaction(final Transaction transaction) {
+        budgetRepository.update(transaction);
     }
     
     public BigDecimal calculateBalance() {

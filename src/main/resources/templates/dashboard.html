@@ -24,6 +24,7 @@
             <td th:text="${transaction.category}"></td>
             <td th:text="${transaction.description}"></td>
             <td th:text="${#temporals.format(transaction.date, 'yyyy-MM-dd HH:mm')}"></td>
+            <td><a th:href="@{/transaction/{id}/update(id=${transaction.id})}" th:text="${transaction.description}" ></a> </td>
         </tr>
         </tbody>
     </table>

@@ -10,9 +10,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Controller
 @RequiredArgsConstructor
@@ -32,6 +34,18 @@ public class DashboardController {
                 .balance(budgetService.calculateBalance())
                 .build());
         return "dashboard";
+    }
+
+    @GetMapping("/transaction/{id}/update")
+    public String updateTransaction(Model model, @PathVariable UUID id) {
+        model.addAttribute("transaction", budgetService.getTransactionById(id));
+        return "redirect:/dashboard";
+    }
+
+    @PostMapping("/transaction/{id}/update")
+    public String updateTransaction(Model model, @PathVariable UUID id, TransactionDto transactionDto) {
+        budgetService.updateTransaction(transactionDtoMapper.toTransaction(transactionDto));
+        return showDashboard(model);
     }
 
 
