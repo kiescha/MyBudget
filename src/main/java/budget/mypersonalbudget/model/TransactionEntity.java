@@ -1,6 +1,6 @@
 package budget.mypersonalbudget.model;
 
-import budget.mypersonalbudget.core.domain.TransactionType;
+import budget.mypersonalbudget.core.domain.TransactionTypeEnum;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -14,7 +14,7 @@ import java.util.UUID;
 @Builder
 public class TransactionEntity {
     private UUID id;
-    private TransactionType type;
+    private TransactionTypeEnum type;
     private String category;
     private BigDecimal amount;
     private String description;

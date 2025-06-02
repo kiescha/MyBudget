@@ -2,7 +2,6 @@ package budget.mypersonalbudget.mapper;
 
 import budget.mypersonalbudget.core.domain.Transaction;
 
-import budget.mypersonalbudget.core.domain.TransactionType;
 import budget.mypersonalbudget.model.TransactionEntity;
 import org.springframework.stereotype.Component;
 

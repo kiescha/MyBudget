@@ -15,5 +15,5 @@ public class Transaction {
     private String description;
     private String category;
     private LocalDateTime date;
-    private TransactionType type;
+    private TransactionTypeEnum type;
 }

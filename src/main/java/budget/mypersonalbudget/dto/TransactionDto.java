@@ -1,6 +1,6 @@
 package budget.mypersonalbudget.dto;
 
-import budget.mypersonalbudget.core.domain.TransactionType;
+import budget.mypersonalbudget.core.domain.TransactionTypeEnum;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -16,7 +16,7 @@ import java.util.UUID;
 @Builder
 public class TransactionDto {
     private UUID id;
-    private TransactionType type;
+    private TransactionTypeEnum type;
     private String category;
     private BigDecimal amount;
     private String description;

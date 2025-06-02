@@ -1,7 +1,7 @@
 package budget.mypersonalbudget.mapper;
 
 import budget.mypersonalbudget.core.domain.Transaction;
-import budget.mypersonalbudget.core.domain.TransactionType;
+import budget.mypersonalbudget.core.domain.TransactionTypeEnum;
 import budget.mypersonalbudget.dto.TransactionDto;
 import org.springframework.stereotype.Component;
 
@@ -25,7 +25,7 @@ public class TransactionDtoMapper {
                 .amount(transaction.getAmount())
                 .category(transaction.getCategory())
                 .description(transaction.getDescription())
-                .type(transaction.getType() != null ? transaction.getType() : TransactionType.EXPENSE)
+                .type(transaction.getType() != null ? transaction.getType() : TransactionTypeEnum.EXPENSE)
                 .date(transaction.getDate())
                 .build();
         return transactionDto;
