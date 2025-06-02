@@ -28,7 +28,8 @@ public class DashboardController {
         
         model.addAttribute("transaction", transactionDto);
         model.addAttribute("dashboard", DashboardDto.builder()
-                        .transactionDtoList(budgetService.getAllTransactions())
+                .transactionDtoList(budgetService.getAllTransactions())
+                .balance(budgetService.calculateBalance())
                 .build());
         return "dashboard";
     }
