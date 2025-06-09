@@ -3,19 +3,19 @@ spring:
     name: MyPersonalBudget
   main:
     banner-mode: console
-#  h2:
-#    console:
-#      path: /budget_h2
-#      enabled: true
-#  datasource:
-#    url: jdbc:h2:mem:budget_db
-#    driver-class-name: org.h2.Driver
-#    username: a
-#    password: a
-#  jpa:
-#    hibernate:
-#      ddl-auto: validate
-#  sql:
-#    init:
-#      schema-locations: classpath:db/ddl/db_schema_h2.sql
-#      data-locations: classpath:db/dml/db_data.sql
+  h2:
+    console:
+      path: /budget_h2
+      enabled: true
+  datasource:
+    url: jdbc:h2:mem:budget_db
+    driver-class-name: org.h2.Driver
+    username: a
+    password: a
+  jpa:
+    hibernate:
+      ddl-auto: validate
+  sql:
+    init:
+      schema-locations: classpath:db/ddl/db_schema_h2.sql
+      data-locations: classpath:db/dml/db_data.sql
