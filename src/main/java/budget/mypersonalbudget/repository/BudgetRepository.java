@@ -29,19 +29,24 @@ public class BudgetRepository {
     }
 
     public void update(final Transaction transaction) {
-        transactionEntities.stream().filter(transactionEntity -> transactionEntity.getId() == transaction.getId())
+        transactionEntities.stream().filter(transactionEntity -> transactionEntity.getId().equals(transaction.getId()))
                 .findFirst()
                 .ifPresent(transactionEntity -> {
                     transactionEntity.setAmount(transaction.getAmount());
                     transactionEntity.setCategory(transaction.getCategory());
                     transactionEntity.setDescription(transaction.getDescription());
                     transactionEntity.setDate(transaction.getDate());
+                    transactionEntity.setType(transaction.getType());
                 });
+    }
+    
+    public void deleteProductByUUID(final UUID id) {
+        transactionEntities.removeIf(transactionEntity -> transactionEntity.getId().equals(id));
     }
 
     public Optional<Transaction> findById(final UUID id) {
         return transactionEntities.stream()
-                .filter(transactionEntity -> transactionEntity.getId() == id)
+                .filter(transactionEntity -> transactionEntity.getId().equals(id))
                 .map(transactionEntityMapper::toTransaction)
                 .findFirst();
     }

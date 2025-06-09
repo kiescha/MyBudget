@@ -35,6 +35,10 @@ public class BudgetService {
     public void updateTransaction(final Transaction transaction) {
         budgetRepository.update(transaction);
     }
+
+    public void deleteTransactionById(final UUID transactionid) {
+        budgetRepository.deleteProductByUUID(transactionid);
+    }
     
     public BigDecimal calculateBalance() {
         List<Transaction> transactions = getAllTransactions();

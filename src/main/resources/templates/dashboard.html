@@ -2,8 +2,13 @@
 <head>
     <meta charset="UTF-8">
     <title>Budget</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+
 </head>
 <body>
+<!-- Success message box that appears on any action -->
+
+
 <h3>Transactions:</h3>
 <div th:if="${dashboard.transactionDtoList.isEmpty()}">No transactions yet</div>
 <div th:unless="${dashboard.transactionDtoList.isEmpty()}">
@@ -15,6 +20,7 @@
             <th>Category</th>
             <th>Description</th>
             <th>Date</th>
+            <th>Actions</th>
         </tr>
         </thead>
         <tbody>
@@ -24,32 +30,65 @@
             <td th:text="${transaction.category}"></td>
             <td th:text="${transaction.description}"></td>
             <td th:text="${#temporals.format(transaction.date, 'yyyy-MM-dd HH:mm')}"></td>
-            <td><a th:href="@{/transaction/{id}/update(id=${transaction.id})}" th:text="${transaction.description}" ></a> </td>
+            <td>
+                <a th:href="@{/dashboard/edit(id=${transaction.id})}">Update</a>
+                <a th:href="@{/transaction/{id}/delete(id=${transaction.id})}">Delete</a>
+            </td>
         </tr>
         </tbody>
     </table>
 </div>
 
-<h3>Let's create a transaction:</h3>
-<form th:action="@{/transaction}" method="post" th:object="${transaction}">
-    <label>Amount:</label>
-    <input type="text" th:field="*{amount}" /><br/>
+<!-- Show create form if not in edit mode -->
+<div th:if="${transaction.id == null}">
+    <h3>Create a transaction:</h3>
+    <form th:action="@{/transaction}" method="post" th:object="${transaction}">
+        <label>Amount:</label>
+        <input type="text" th:field="*{amount}" /><br/>
 
-    <label>Type:</label>
-    <input type="radio" th:field="*{type}" th:value="INCOME" /> Income
-    <input type="radio" th:field="*{type}" th:value="EXPENSE" /> Expense<br/>
+        <label>Type:</label>
+        <input type="radio" th:field="*{type}" th:value="INCOME" /> Income
+        <input type="radio" th:field="*{type}" th:value="EXPENSE" /> Expense<br/>
 
-    <label>Category:</label>
-    <input type="text" th:field="*{category}" /><br/>
+        <label>Category:</label>
+        <input type="text" th:field="*{category}" /><br/>
 
-    <label>Description:</label>
-    <input type="text" th:field="*{description}" /><br/>
+        <label>Description:</label>
+        <input type="text" th:field="*{description}" /><br/>
 
-    <label>Date:</label>
-    <input type="datetime-local" th:field="*{date}" />
+        <label>Date:</label>
+        <input type="datetime-local" th:field="*{date}" />
 
-    <button type="submit">Submit</button>
-</form>
+        <button type="submit">Create</button>
+    </form>
+    <div th:if="${message}" class="alert alert-success" role="alert" th:text="${message}"></div>
+</div>
+
+<!-- Show update form if in edit mode -->
+<div th:if="${transaction.id != null}">
+    <h3>Update transaction:</h3>
+    <form th:action="@{/transaction/{id}/update(id=${transaction.id})}" method="post" th:object="${transaction}">
+        <label>Amount:</label>
+        <input type="text" th:field="*{amount}" /><br/>
+
+        <label>Type:</label>
+        <input type="radio" th:field="*{type}" th:value="INCOME" /> Income
+        <input type="radio" th:field="*{type}" th:value="EXPENSE" /> Expense<br/>
+
+        <label>Category:</label>
+        <input type="text" th:field="*{category}" /><br/>
+
+        <label>Description:</label>
+        <input type="text" th:field="*{description}" /><br/>
+
+        <label>Date:</label>
+        <input type="datetime-local" th:field="*{date}" />
+
+        <button type="submit">Update</button>
+        <a th:href="@{/dashboard}">Cancel</a>
+    </form>
+    <div th:if="${message}" class="alert alert-success" role="alert" th:text="${message}"></div>
+</div>
 
 <h3>Balance:</h3>
 <div>

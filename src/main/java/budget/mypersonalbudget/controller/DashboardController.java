@@ -1,6 +1,7 @@
 package budget.mypersonalbudget.controller;
 
 
+import budget.mypersonalbudget.core.domain.Transaction;
 import budget.mypersonalbudget.dto.DashboardDto;
 import budget.mypersonalbudget.dto.TransactionDto;
 import budget.mypersonalbudget.mapper.TransactionDtoMapper;
@@ -12,6 +13,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -25,8 +28,23 @@ public class DashboardController {
 
     @GetMapping("/dashboard")
     public String showDashboard(Model model) {
-        TransactionDto transactionDto = new TransactionDto();
-        transactionDto.setDate(LocalDateTime.now()); // Set default date to now
+        if (!model.containsAttribute("transaction")) {
+            TransactionDto transactionDto = new TransactionDto();
+            transactionDto.setDate(LocalDateTime.now()); // Set default date to now
+            model.addAttribute("transaction", transactionDto);
+        }
+        
+        model.addAttribute("dashboard", DashboardDto.builder()
+                .transactionDtoList(budgetService.getAllTransactions())
+                .balance(budgetService.calculateBalance())
+                .build());
+        return "dashboard";
+    }
+    
+    @GetMapping("/dashboard/edit")
+    public String showEditForm(@RequestParam UUID id, Model model) {
+        Transaction transaction = budgetService.getTransactionById(id);
+        TransactionDto transactionDto = transactionDtoMapper.toTransactionDto(transaction);
         
         model.addAttribute("transaction", transactionDto);
         model.addAttribute("dashboard", DashboardDto.builder()
@@ -36,27 +54,40 @@ public class DashboardController {
         return "dashboard";
     }
 
-    @GetMapping("/transaction/{id}/update")
-    public String updateTransaction(Model model, @PathVariable UUID id) {
-        model.addAttribute("transaction", budgetService.getTransactionById(id));
+    @PostMapping("/transaction/{id}/update")
+    public String updateTransaction(@PathVariable UUID id, 
+                                    @ModelAttribute TransactionDto transactionDto,
+                                    RedirectAttributes redirectAttributes) {
+        transactionDto.setId(id);
+        budgetService.updateTransaction(transactionDtoMapper.toTransaction(transactionDto));
+        
+        redirectAttributes.addFlashAttribute("message", "Transaction updated successfully");
         return "redirect:/dashboard";
     }
 
-    @PostMapping("/transaction/{id}/update")
-    public String updateTransaction(Model model, @PathVariable UUID id, TransactionDto transactionDto) {
-        budgetService.updateTransaction(transactionDtoMapper.toTransaction(transactionDto));
-        return showDashboard(model);
+    @GetMapping("/transaction/{id}/delete")
+    public String deleteTransaction(@PathVariable UUID id, RedirectAttributes redirectAttributes) {
+        budgetService.deleteTransactionById(id);
+        
+        redirectAttributes.addFlashAttribute("message", "Transaction deleted successfully");
+        return "redirect:/dashboard";
     }
 
-
     @PostMapping("/transaction")
-    public String createTransaction(@ModelAttribute("transaction") TransactionDto transaction) {
+    public String createTransaction(@ModelAttribute("transaction") TransactionDto transaction,
+                                    RedirectAttributes redirectAttributes) {
+        if (transaction.getId() == null) {
+            transaction.setId(UUID.randomUUID());
+        }
 
         if (transaction.getDate() == null) {
             transaction.setDate(LocalDateTime.now());
         }
         
         budgetService.save(transactionDtoMapper.toTransaction(transaction));
+        
+        redirectAttributes.addFlashAttribute("transaction", new TransactionDto());
+        redirectAttributes.addFlashAttribute("message", "Transaction created successfully");
         return "redirect:/dashboard";
     }
 }
