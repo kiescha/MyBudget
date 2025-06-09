@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 public class TransactionEntityMapper {
     public Transaction toTransaction(final TransactionEntity transactionEntity) {
         return Transaction.builder()
-                .id(transactionEntity.getId())
+                .id(transactionEntity.getTransactionId())
                 .amount(transactionEntity.getAmount())
                 .category(transactionEntity.getCategory())
                 .description(transactionEntity.getDescription())
@@ -21,7 +21,7 @@ public class TransactionEntityMapper {
 
     public TransactionEntity toTransactionEntity(final Transaction transaction) {
         return TransactionEntity.builder()
-                .id(transaction.getId())
+                .transactionId(transaction.getId())
                 .amount(transaction.getAmount())
                 .description(transaction.getDescription())
                 .category(transaction.getCategory())

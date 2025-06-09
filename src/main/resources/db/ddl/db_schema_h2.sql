@@ -1,6 +1,6 @@
 CREATE TABLE transactions
 (
-    id          INT PRIMARY KEY,
+    id          INT PRIMARY KEY auto_increment,
     transaction_id UUID NOT NULL,
     type        VARCHAR(50) NOT NULL,
     category    VARCHAR(255),
