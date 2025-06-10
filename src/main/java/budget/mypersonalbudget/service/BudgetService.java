@@ -37,7 +37,7 @@ public class BudgetService {
     }
 
     public void deleteTransactionById(final UUID transactionid) {
-        budgetRepository.deleteProductByUUID(transactionid);
+        budgetRepository.deleteTransactionById(transactionid);
     }
     
     public BigDecimal calculateBalance() {

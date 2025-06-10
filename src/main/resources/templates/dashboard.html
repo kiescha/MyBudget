@@ -4,7 +4,29 @@
     <title>Budget</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-
+    <style>
+        .dashboard-window {
+            height: 400px;
+            overflow-y: auto;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .dashboard-window h3 {
+            margin-bottom: 15px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f8f9fa;
+        }
+    </style>
 </head>
 <body>
 
@@ -23,10 +45,10 @@
     </div>
 </div>
 
-<div class="container py-4">
+<div class="container">
     <div class="row mb-2">
         <div class="col-md-6">
-            <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+            <div class="dashboard-window border rounded shadow-sm">
                 <h3>Transactions:</h3>
                 <div th:if="${dashboard.transactionDtoList.isEmpty()}">No transactions yet</div>
                 <div th:unless="${dashboard.transactionDtoList.isEmpty()}">
@@ -59,17 +81,21 @@
             </div>
         </div>
         <div class="col-md-6">
-            <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-                <h3>Placeholder:</h3>
+            <div class="dashboard-window border rounded shadow-sm">
+                <h3>Statistics:</h3>
+                <div>
+                    <!-- Add your statistics content here -->
+                    <p>Monthly Overview</p>
+                    <p>Income vs Expenses</p>
+                    <p>Category Distribution</p>
+                </div>
             </div>
         </div>
-
-
     </div>
     <div class="row mb-2">
         <div class="col-md-6">
             <!-- Show create form if not in edit mode -->
-            <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative "
+            <div class="dashboard-window border rounded shadow-sm"
                  th:if="${transaction.id == null}">
                 <h3>Create a transaction:</h3>
                 <form th:action="@{/transaction}" method="post" th:object="${transaction}">
@@ -95,7 +121,7 @@
             </div>
 
             <!-- Show update form if in edit mode -->
-            <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative "
+            <div class="dashboard-window border rounded shadow-sm"
                  th:if="${transaction.id != null}">
                 <h3>Update transaction:</h3>
                 <form th:action="@{/transaction/{id}/update(id=${transaction.id})}" method="post"
@@ -123,14 +149,20 @@
             </div>
         </div>
         <div class="col-md-6">
-            <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative col-md-6">
+            <div class="dashboard-window border rounded shadow-sm">
                 <h3>Balance:</h3>
                 <div>
                     <strong>Current Balance: </strong><span th:text="${dashboard.balance}"></span>
                 </div>
+<!--                <div class="mt-4">-->
+<!--                    <h4>Summary</h4>-->
+<!--                    <p>Total Income: <span th:text="${dashboard.totalIncome}"></span></p>-->
+<!--                    <p>Total Expenses: <span th:text="${dashboard.totalExpenses}"></span></p>-->
+<!--                </div>-->
             </div>
         </div>
     </div>
 </div>
+
 </body>
 </html>

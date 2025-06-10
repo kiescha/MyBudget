@@ -44,7 +44,7 @@ public class BudgetRepository {
     }
     
     @Transactional
-    public void deleteProductByUUID(final UUID id) {
+    public void deleteTransactionById(final UUID id) {
         transactionRepository.deleteByTransactionId(id);
     }
 
