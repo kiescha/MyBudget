@@ -8,7 +8,7 @@ spring:
       path: /budget_h2
       enabled: true
   datasource:
-    url: jdbc:h2:mem:budget_db
+    url: jdbc:h2:mem:budget_db;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
     driver-class-name: org.h2.Driver
     username: a
     password: a
@@ -19,6 +19,7 @@ spring:
     properties:
       hibernate:
         format_sql: true
+        dialect: org.hibernate.dialect.H2Dialect
   sql:
     init:
       schema-locations: classpath:db/ddl/db_schema_h2.sql

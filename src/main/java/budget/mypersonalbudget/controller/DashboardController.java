@@ -6,9 +6,11 @@ import budget.mypersonalbudget.dto.DashboardDto;
 import budget.mypersonalbudget.dto.TransactionDto;
 import budget.mypersonalbudget.mapper.TransactionDtoMapper;
 import budget.mypersonalbudget.service.BudgetService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -56,8 +58,19 @@ public class DashboardController {
 
     @PostMapping("/transaction/{id}/update")
     public String updateTransaction(@PathVariable UUID id, 
-                                    @ModelAttribute TransactionDto transactionDto,
+                                    @Valid @ModelAttribute TransactionDto transactionDto,
+                                    BindingResult bindingResult,
+                                    Model model,
                                     RedirectAttributes redirectAttributes) {
+        if (bindingResult.hasErrors()) {
+            // If validation fails, return to dashboard with errors
+            model.addAttribute("dashboard", DashboardDto.builder()
+                    .transactionDtoList(budgetService.getAllTransactions())
+                    .balance(budgetService.calculateBalance())
+                    .build());
+            return "dashboard";
+        }
+        
         transactionDto.setId(id);
         budgetService.updateTransaction(transactionDtoMapper.toTransaction(transactionDto));
         
@@ -74,8 +87,19 @@ public class DashboardController {
     }
 
     @PostMapping("/transaction")
-    public String createTransaction(@ModelAttribute("transaction") TransactionDto transaction,
+    public String createTransaction(@Valid @ModelAttribute("transaction") TransactionDto transaction,
+                                    BindingResult bindingResult,
+                                    Model model,
                                     RedirectAttributes redirectAttributes) {
+        if (bindingResult.hasErrors()) {
+            // If validation fails, return to dashboard with errors
+            model.addAttribute("dashboard", DashboardDto.builder()
+                    .transactionDtoList(budgetService.getAllTransactions())
+                    .balance(budgetService.calculateBalance())
+                    .build());
+            return "dashboard";
+        }
+        
         if (transaction.getId() == null) {
             transaction.setId(UUID.randomUUID());
         }

@@ -8,3 +8,6 @@ VALUES (1, 'b17b56e3-2e3c-4a9b-bf5c-a12345678901', 'INCOME', 'Salary', 2500.00, 
         '2025-06-04 19:15:00'),
        (5, 'e1bd9b3e-0cb1-4b95-97cb-e12345678905', 'EXPENSE', 'Utilities', 120.50, 'Electricity bill',
         '2025-06-05 12:00:00');
+
+-- Reset the auto-increment sequence to continue after the highest ID
+ALTER TABLE transactions ALTER COLUMN id RESTART WITH 6;

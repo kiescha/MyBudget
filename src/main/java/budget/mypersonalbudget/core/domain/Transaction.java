@@ -16,4 +16,8 @@ public class Transaction {
     private String category;
     private LocalDateTime date;
     private TransactionTypeEnum type;
+
+    public UUID getId() {
+        return id != null ? id : UUID.randomUUID();
+    }
 }
