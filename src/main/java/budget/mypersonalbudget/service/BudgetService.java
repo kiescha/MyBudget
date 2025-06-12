@@ -47,9 +47,9 @@ public class BudgetService {
                 .map(transaction -> {
                     if (transaction.getType() == TransactionTypeEnum.INCOME) {
                         return transaction.getAmount();
-                    } else {
-                        return transaction.getAmount().negate();
                     }
+                    return transaction.getAmount().negate();
+
                 })
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
     }

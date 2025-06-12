@@ -32,7 +32,7 @@ public class DashboardController {
     public String showDashboard(Model model) {
         if (!model.containsAttribute("transaction")) {
             TransactionDto transactionDto = new TransactionDto();
-            transactionDto.setDate(LocalDateTime.now()); // Set default date to now
+            transactionDto.setDate(LocalDateTime.now());
             model.addAttribute("transaction", transactionDto);
         }
         
@@ -63,7 +63,6 @@ public class DashboardController {
                                     Model model,
                                     RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
-            // If validation fails, return to dashboard with errors
             model.addAttribute("dashboard", DashboardDto.builder()
                     .transactionDtoList(budgetService.getAllTransactions())
                     .balance(budgetService.calculateBalance())
@@ -92,7 +91,6 @@ public class DashboardController {
                                     Model model,
                                     RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
-            // If validation fails, return to dashboard with errors
             model.addAttribute("dashboard", DashboardDto.builder()
                     .transactionDtoList(budgetService.getAllTransactions())
                     .balance(budgetService.calculateBalance())
