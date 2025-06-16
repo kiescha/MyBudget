@@ -29,8 +29,9 @@ public class DashboardControllerApi {
     public ResponseEntity<Void> deleteTransaction(@PathVariable UUID id) {
         if (budgetService.getTransactionOptionalById(id).isPresent()) {
             budgetService.deleteTransactionById(id);
+            return ResponseEntity.ok().build();
         }
-        return ResponseEntity.ok().build();
+        return ResponseEntity.notFound().build();
     }
 
     @PutMapping("/update/{id}")
