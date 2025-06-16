@@ -1,6 +1,5 @@
 package budget.mypersonalbudget.service;
 
-
 import budget.mypersonalbudget.core.domain.Transaction;
 import budget.mypersonalbudget.core.domain.TransactionTypeEnum;
 import budget.mypersonalbudget.mapper.TransactionEntityMapper;
@@ -32,6 +31,7 @@ public class BudgetService {
     public Transaction getTransactionById(final UUID id) {
         return budgetRepository.findById(id).orElse(null);
     }
+
     public Optional<Transaction> getTransactionOptionalById(final UUID id) {
         return budgetRepository.findById(id);
     }
@@ -45,10 +45,9 @@ public class BudgetService {
     }
 
 
-    
     public BigDecimal calculateBalance() {
         List<Transaction> transactions = getAllTransactions();
-        
+
         return transactions.stream()
                 .map(transaction -> {
                     if (transaction.getType() == TransactionTypeEnum.INCOME) {
@@ -61,7 +60,9 @@ public class BudgetService {
     }
 
     public Transaction createTransaction(Transaction transaction) {
-       budgetRepository.save(transaction);
+        budgetRepository.save(transaction);
         return transaction;
-    };
+    }
+
+    ;
 }

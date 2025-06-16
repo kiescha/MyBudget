@@ -35,19 +35,19 @@ public class DashboardController {
             transactionDto.setDate(LocalDateTime.now());
             model.addAttribute("transaction", transactionDto);
         }
-        
+
         model.addAttribute("dashboard", DashboardDto.builder()
                 .transactionDtoList(budgetService.getAllTransactions())
                 .balance(budgetService.calculateBalance())
                 .build());
         return "dashboard";
     }
-    
+
     @GetMapping("/dashboard/edit")
     public String showEditForm(@RequestParam UUID id, Model model) {
         Transaction transaction = budgetService.getTransactionById(id);
         TransactionDto transactionDto = transactionDtoMapper.toTransactionDto(transaction);
-        
+
         model.addAttribute("transaction", transactionDto);
         model.addAttribute("dashboard", DashboardDto.builder()
                 .transactionDtoList(budgetService.getAllTransactions())
@@ -57,7 +57,7 @@ public class DashboardController {
     }
 
     @PostMapping("/transaction/{id}/update")
-    public String updateTransaction(@PathVariable UUID id, 
+    public String updateTransaction(@PathVariable UUID id,
                                     @Valid @ModelAttribute TransactionDto transactionDto,
                                     BindingResult bindingResult,
                                     Model model,
@@ -69,10 +69,10 @@ public class DashboardController {
                     .build());
             return "dashboard";
         }
-        
+
         transactionDto.setId(id);
         budgetService.updateTransaction(transactionDtoMapper.toTransaction(transactionDto));
-        
+
         redirectAttributes.addFlashAttribute("message", "Transaction updated successfully");
         return "redirect:/dashboard";
     }
@@ -80,7 +80,7 @@ public class DashboardController {
     @GetMapping("/transaction/{id}/delete")
     public String deleteTransaction(@PathVariable UUID id, RedirectAttributes redirectAttributes) {
         budgetService.deleteTransactionById(id);
-        
+
         redirectAttributes.addFlashAttribute("message", "Transaction deleted successfully");
         return "redirect:/dashboard";
     }
@@ -97,7 +97,7 @@ public class DashboardController {
                     .build());
             return "dashboard";
         }
-        
+
         if (transaction.getId() == null) {
             transaction.setId(UUID.randomUUID());
         }
@@ -105,9 +105,9 @@ public class DashboardController {
         if (transaction.getDate() == null) {
             transaction.setDate(LocalDateTime.now());
         }
-        
+
         budgetService.save(transactionDtoMapper.toTransaction(transaction));
-        
+
         redirectAttributes.addFlashAttribute("transaction", new TransactionDto());
         redirectAttributes.addFlashAttribute("message", "Transaction created successfully");
         return "redirect:/dashboard";

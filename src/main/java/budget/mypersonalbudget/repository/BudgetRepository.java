@@ -42,7 +42,7 @@ public class BudgetRepository {
                     transactionRepository.save(entity);
                 });
     }
-    
+
     @Transactional
     public void deleteTransactionById(final UUID id) {
         transactionRepository.deleteByTransactionId(id);

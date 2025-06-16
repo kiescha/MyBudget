@@ -1,14 +1,11 @@
 package budget.mypersonalbudget.controller;
 
 import budget.mypersonalbudget.core.domain.Transaction;
-import budget.mypersonalbudget.dto.TransactionDto;
 import budget.mypersonalbudget.service.BudgetService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @RestController
