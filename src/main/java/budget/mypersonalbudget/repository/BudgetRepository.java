@@ -52,4 +52,5 @@ public class BudgetRepository {
         return transactionRepository.findByTransactionId(id)
                 .map(transactionEntityMapper::toTransaction);
     }
+
 }

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 
@@ -31,13 +32,16 @@ public class BudgetService {
     public Transaction getTransactionById(final UUID id) {
         return budgetRepository.findById(id).orElse(null);
     }
+    public Optional<Transaction> getTransactionOptionalById(final UUID id) {
+        return budgetRepository.findById(id);
+    }
 
     public void updateTransaction(final Transaction transaction) {
         budgetRepository.update(transaction);
     }
 
-    public void deleteTransactionById(final UUID transactionid) {
-        budgetRepository.deleteTransactionById(transactionid);
+    public void deleteTransactionById(final UUID transactionId) {
+        budgetRepository.deleteTransactionById(transactionId);
     }
     
     public BigDecimal calculateBalance() {
@@ -53,4 +57,9 @@ public class BudgetService {
                 })
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
+
+    public Transaction createTransaction(Transaction transaction) {
+       budgetRepository.save(transaction);
+        return transaction;
+    };
 }
