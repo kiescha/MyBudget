@@ -18,7 +18,7 @@ import java.util.UUID;
 public class TransactionEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
     
     @Column(name = "transaction_id", nullable = false)
     private UUID transactionId;

@@ -8,7 +8,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Repository
-public interface TransactionRepository extends JpaRepository<TransactionEntity, Integer> {
+public interface TransactionRepository extends JpaRepository<TransactionEntity, Long> {
 
     Optional<TransactionEntity> findByTransactionId(UUID transactionId);
 
