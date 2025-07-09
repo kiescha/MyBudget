@@ -11,3 +11,9 @@ VALUES (1, 'b17b56e3-2e3c-4a9b-bf5c-a12345678901', 'INCOME', 'Salary', 2500.00, 
 
 -- Reset the auto-increment sequence to continue after the highest ID
 ALTER TABLE transactions ALTER COLUMN id RESTART WITH 6;
+
+-- Insert test user (password: password123)
+-- The password is BCrypt encrypted version of "password123"
+INSERT INTO user_entity (name, password, email, phone, enabled, role) 
+VALUES ('admin', '$2a$10$N.zmdr9k7uOCQb376NoUnuTJ8iAt6Z5EHsM8lE9lBOsl7iKTVEFDa', 'admin@example.com', '123456789', true, 'ADMIN')
+ON DUPLICATE KEY UPDATE name = name;
