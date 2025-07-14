@@ -5,111 +5,134 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <style>
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+        }
+        
+        .main-container {
+            display: flex;
+            min-height: calc(100vh - 56px); /* Subtract navbar height */
+        }
+        
+        .sidebar {
+            width: 280px;
+            background-color: #212529;
+            color: white;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            height: calc(100vh - 56px);
+            overflow-y: auto;
+        }
+        
+        .sidebar-content {
+            flex: 1;
+        }
+        
         .dashboard-window {
-            height: 400px;
+            height: auto;
             overflow-y: auto;
             padding: 20px;
             margin-bottom: 20px;
         }
+
         .dashboard-window h3 {
             margin-bottom: 15px;
         }
+
         table {
             width: 100%;
             border-collapse: collapse;
         }
+
         th, td {
             padding: 8px;
             text-align: left;
             border-bottom: 1px solid #ddd;
         }
+
         th {
             background-color: #f8f9fa;
         }
+
         .error {
             color: red;
             font-size: 0.9em;
             margin-top: 5px;
         }
+
         .form-group {
             margin-bottom: 15px;
+        }
+        
+        .main-content {
+            flex: 1;
+            padding: 20px;
+            background-color: #f8f9fa;
+        }
+        
+        .chart-container {
+            background: white;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .chart-bar {
+            height: 20px;
+            background: linear-gradient(90deg, #28a745, #20c997);
+            border-radius: 10px;
+            margin: 5px 0;
+            position: relative;
+        }
+        
+        .chart-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+            font-size: 0.9em;
+        }
+        
+        .income-bar {
+            background: linear-gradient(90deg, #28a745, #20c997);
+        }
+        
+        .expense-bar {
+            background: linear-gradient(90deg, #dc3545, #fd7e14);
         }
     </style>
 </head>
 <body>
 
 <div class="navbar navbar-dark bg-dark shadow-sm">
-    <div class="container"><a href="#" class="navbar-brand d-flex align-items-center">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor"
-             stroke-linecap="round" stroke-linejoin="round" stroke-width="2" aria-hidden="true" class="me-2"
-             viewBox="0 0 24 24">
-            <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
-            <circle cx="12" cy="13" r="4"></circle>
-        </svg>
-        <strong>Album</strong> </a>
+    <div class="container">
+
+        <p class="navbar-brand d-flex align-items-center">
+            <strong>Current Balance:  </strong>  <span th:text="${dashboard.balance}"></span>
+        </p>>
         <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbarHeader"
                 aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation"><span
                 class="navbar-toggler-icon"></span></button>
     </div>
 </div>
 
-<div class="container">
-    <div class="row mb-2">
-        <div class="col-md-6">
-            <div class="dashboard-window border rounded shadow-sm">
-                <h3>Transactions:</h3>
-                <div th:if="${dashboard.transactionDtoList.isEmpty()}">No transactions yet</div>
-                <div th:unless="${dashboard.transactionDtoList.isEmpty()}">
-                    <table>
-                        <thead>
-                        <tr>
-                            <th>Amount</th>
-                            <th>Type</th>
-                            <th>Category</th>
-                            <th>Description</th>
-                            <th>Date</th>
-                            <th>Actions</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr th:each="transaction : ${dashboard.transactionDtoList}">
-                            <td th:text="${transaction.amount}"></td>
-                            <td th:text="${transaction.type != null && transaction.type.name() == 'INCOME' ? 'Income' : 'Expense'}"></td>
-                            <td th:text="${transaction.category}"></td>
-                            <td th:text="${transaction.description}"></td>
-                            <td th:text="${#temporals.format(transaction.date, 'yyyy-MM-dd HH:mm')}"></td>
-                            <td>
-                                <a th:href="@{/dashboard/edit(id=${transaction.id})}">Update</a>
-                                <a th:href="@{/transaction/{id}/delete(id=${transaction.id})}">Delete</a>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="dashboard-window border rounded shadow-sm">
-                <h3>Statistics:</h3>
-                <div>
-                    <!-- Add your statistics content here -->
-                    <p>Monthly Overview</p>
-                    <p>Income vs Expenses</p>
-                    <p>Category Distribution</p>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row mb-2">
-        <div class="col-md-6">
+<div class="main-container">
+    <div class="sidebar">
+        <div class="sidebar-content">
+            <h4 class="mb-3">Add Transaction</h4>
+            
             <!-- Show create form if not in edit mode -->
             <div class="dashboard-window border rounded shadow-sm"
                  th:if="${transaction.id == null}">
-                <h3>Create a transaction:</h3>
+                <h5>Create a transaction:</h5>
                 <form th:action="@{/transaction}" method="post" th:object="${transaction}">
                     <div class="form-group">
                         <label>Amount:</label>
-                        <input type="text" th:field="*{amount}" class="form-control" th:classappend="${#fields.hasErrors('amount')} ? 'is-invalid' : ''"/>
+                        <input type="text" th:field="*{amount}" class="form-control"
+                               th:classappend="${#fields.hasErrors('amount')} ? 'is-invalid' : ''"/>
                         <div class="error" th:if="${#fields.hasErrors('amount')}" th:errors="*{amount}"></div>
                     </div>
 
@@ -148,12 +171,13 @@
             <!-- Show update form if in edit mode -->
             <div class="dashboard-window border rounded shadow-sm"
                  th:if="${transaction.id != null}">
-                <h3>Update transaction:</h3>
+                <h5>Update transaction:</h5>
                 <form th:action="@{/transaction/{id}/update(id=${transaction.id})}" method="post"
                       th:object="${transaction}">
                     <div class="form-group">
                         <label>Amount:</label>
-                        <input type="text" th:field="*{amount}" class="form-control" th:classappend="${#fields.hasErrors('amount')} ? 'is-invalid' : ''"/>
+                        <input type="text" th:field="*{amount}" class="form-control"
+                               th:classappend="${#fields.hasErrors('amount')} ? 'is-invalid' : ''"/>
                         <div class="error" th:if="${#fields.hasErrors('amount')}" th:errors="*{amount}"></div>
                     </div>
 
@@ -190,17 +214,82 @@
                 <div th:if="${message}" class="alert alert-success" role="alert" th:text="${message}"></div>
             </div>
         </div>
-        <div class="col-md-6">
-            <div class="dashboard-window border rounded shadow-sm">
-                <h3>Balance:</h3>
-                <div>
-                    <strong>Current Balance: </strong><span th:text="${dashboard.balance}"></span>
+    </div>
+
+    <div class="main-content">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="dashboard-window border rounded shadow-sm">
+                    <h3>Transactions:</h3>
+                    <div th:if="${dashboard.transactionDtoList.isEmpty()}">No transactions yet</div>
+                    <div th:unless="${dashboard.transactionDtoList.isEmpty()}">
+                        <table>
+                            <thead>
+                            <tr>
+                                <th>Amount</th>
+                                <th>Type</th>
+                                <th>Category</th>
+                                <th>Description</th>
+                                <th>Date</th>
+                                <th>Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="transaction : ${dashboard.transactionDtoList}">
+                                <td th:text="${transaction.amount}"></td>
+                                <td th:text="${transaction.type != null && transaction.type.name() == 'INCOME' ? 'Income' : 'Expense'}"></td>
+                                <td th:text="${transaction.category}"></td>
+                                <td th:text="${transaction.description}"></td>
+                                <td th:text="${#temporals.format(transaction.date, 'yyyy-MM-dd HH:mm')}"></td>
+                                <td>
+                                    <a th:href="@{/dashboard/edit(id=${transaction.id})}">Update</a>
+                                    <a th:href="@{/transaction/{id}/delete(id=${transaction.id})}">Delete</a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-<!--                <div class="mt-4">-->
-<!--                    <h4>Summary</h4>-->
-<!--                    <p>Total Income: <span th:text="${dashboard.totalIncome}"></span></p>-->
-<!--                    <p>Total Expenses: <span th:text="${dashboard.totalExpenses}"></span></p>-->
-<!--                </div>-->
+            </div>
+            <div class="col-md-4">
+                <div class="dashboard-window border rounded shadow-sm">
+                    <h3>Statistics:</h3>
+                    <div class="chart-container">
+                        <h5>Income vs Expenses</h5>
+                        <div class="chart-label">
+                            <span>Income</span>
+                            <span>$3,200</span>
+                        </div>
+                        <div class="chart-bar income-bar" style="width: 80%"></div>
+                        
+                        <div class="chart-label">
+                            <span>Expenses</span>
+                            <span>$750</span>
+                        </div>
+                        <div class="chart-bar expense-bar" style="width: 25%"></div>
+                    </div>
+                    
+                    <div class="chart-container">
+                        <h5>Category Breakdown</h5>
+                        <div class="chart-label">
+                            <span>Groceries</span>
+                            <span>$85</span>
+                        </div>
+                        <div class="chart-bar" style="width: 30%"></div>
+                        
+                        <div class="chart-label">
+                            <span>Transport</span>
+                            <span>$45</span>
+                        </div>
+                        <div class="chart-bar" style="width: 20%"></div>
+                        
+                        <div class="chart-label">
+                            <span>Entertainment</span>
+                            <span>$120</span>
+                        </div>
+                        <div class="chart-bar" style="width: 40%"></div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
