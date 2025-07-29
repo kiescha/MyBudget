@@ -1,5 +1,6 @@
 package budget.mypersonalbudget.model;
 
+import budget.mypersonalbudget.core.domain.TransactionCategoryEnum;
 import budget.mypersonalbudget.core.domain.TransactionTypeEnum;
 import jakarta.persistence.*;
 import lombok.*;
@@ -27,7 +28,8 @@ public class TransactionEntity {
     @Column(nullable = false)
     private TransactionTypeEnum type;
     
-    private String category;
+    @Enumerated(EnumType.STRING)
+    private TransactionCategoryEnum category;
     
     @Column(nullable = false)
     private BigDecimal amount;

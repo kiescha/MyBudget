@@ -147,7 +147,11 @@
 
                     <div class="form-group">
                         <label>Category:</label>
-                        <input type="text" th:field="*{category}" class="form-control"/>
+                        <select th:field="*{category}" class="form-control">
+                            <option th:each="category : ${categories}"
+                                    th:value="${category}"
+                                    th:text="${category}">Category</option>
+                        </select>
                         <div class="error" th:if="${#fields.hasErrors('category')}" th:errors="*{category}"></div>
                     </div>
 
@@ -192,7 +196,11 @@
 
                     <div class="form-group">
                         <label>Category:</label>
-                        <input type="text" th:field="*{category}" class="form-control"/>
+                        <select th:field="*{category}" class="form-control">
+                            <option th:each="category : ${categories}"
+                                    th:value="${category}"
+                                    th:text="${category}">Category</option>
+                        </select>
                         <div class="error" th:if="${#fields.hasErrors('category')}" th:errors="*{category}"></div>
                     </div>
 

@@ -2,6 +2,7 @@ package budget.mypersonalbudget.controller;
 
 
 import budget.mypersonalbudget.core.domain.Transaction;
+import budget.mypersonalbudget.core.domain.TransactionCategoryEnum;
 import budget.mypersonalbudget.dto.DashboardDto;
 import budget.mypersonalbudget.dto.TransactionDto;
 import budget.mypersonalbudget.mapper.TransactionDtoMapper;
@@ -19,7 +20,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Controller
 @RequiredArgsConstructor
@@ -36,8 +39,14 @@ public class DashboardController {
             model.addAttribute("transaction", transactionDto);
         }
 
+        List<TransactionDto> transactionDtos = budgetService.getAllTransactions()
+                .stream()
+                .map(transactionDtoMapper::toTransactionDto)
+                .collect(Collectors.toList());
+
+        model.addAttribute("categories", TransactionCategoryEnum.values());
         model.addAttribute("dashboard", DashboardDto.builder()
-                .transactionDtoList(budgetService.getAllTransactions())
+                .transactionDtoList(transactionDtos)
                 .balance(budgetService.calculateBalance())
                 .build());
         return "dashboard";
@@ -48,9 +57,15 @@ public class DashboardController {
         Transaction transaction = budgetService.getTransactionById(id);
         TransactionDto transactionDto = transactionDtoMapper.toTransactionDto(transaction);
 
+        List<TransactionDto> transactionDtos = budgetService.getAllTransactions()
+                .stream()
+                .map(transactionDtoMapper::toTransactionDto)
+                .collect(Collectors.toList());
+
+        model.addAttribute("categories", TransactionCategoryEnum.values());
         model.addAttribute("transaction", transactionDto);
         model.addAttribute("dashboard", DashboardDto.builder()
-                .transactionDtoList(budgetService.getAllTransactions())
+                .transactionDtoList(transactionDtos)
                 .balance(budgetService.calculateBalance())
                 .build());
         return "dashboard";
@@ -63,8 +78,13 @@ public class DashboardController {
                                     Model model,
                                     RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
+            List<TransactionDto> transactionDtos = budgetService.getAllTransactions()
+                    .stream()
+                    .map(transactionDtoMapper::toTransactionDto)
+                    .collect(Collectors.toList());
+            model.addAttribute("categories", TransactionCategoryEnum.values());
             model.addAttribute("dashboard", DashboardDto.builder()
-                    .transactionDtoList(budgetService.getAllTransactions())
+                    .transactionDtoList(transactionDtos)
                     .balance(budgetService.calculateBalance())
                     .build());
             return "dashboard";
@@ -91,8 +111,14 @@ public class DashboardController {
                                     Model model,
                                     RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
+            List<TransactionDto> transactionDtos = budgetService.getAllTransactions()
+                    .stream()
+                    .map(transactionDtoMapper::toTransactionDto)
+                    .collect(Collectors.toList());
+
+            model.addAttribute("categories", TransactionCategoryEnum.values());
             model.addAttribute("dashboard", DashboardDto.builder()
-                    .transactionDtoList(budgetService.getAllTransactions())
+                    .transactionDtoList(transactionDtos)
                     .balance(budgetService.calculateBalance())
                     .build());
             return "dashboard";

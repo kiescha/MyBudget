@@ -13,7 +13,7 @@ public class Transaction {
     private UUID id;
     private BigDecimal amount;
     private String description;
-    private String category;
+    private TransactionCategoryEnum category;
     private LocalDateTime date;
     private TransactionTypeEnum type;
 

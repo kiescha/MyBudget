@@ -1,5 +1,6 @@
 package budget.mypersonalbudget.dto;
 
+import budget.mypersonalbudget.core.domain.TransactionCategoryEnum;
 import budget.mypersonalbudget.core.domain.TransactionTypeEnum;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -23,8 +24,7 @@ public class TransactionDto {
     @NotNull(message = "Type is required")
     private TransactionTypeEnum type;
     
-    @NotBlank(message = "Category is required")
-    private String category;
+    private TransactionCategoryEnum category;
     
     @Positive(message = "Amount must be greater than zero")
     @NotNull(message = "Amount is required")
