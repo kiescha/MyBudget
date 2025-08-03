@@ -47,7 +47,7 @@ public class DashboardControllerApi {
     }
 
 
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<Transaction> createTransaction(@RequestBody Transaction transaction) {
         Transaction created = budgetService.createTransaction(transaction);
         return ResponseEntity.ok(created);
