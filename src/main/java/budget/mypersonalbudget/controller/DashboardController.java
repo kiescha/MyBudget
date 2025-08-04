@@ -1,6 +1,4 @@
 package budget.mypersonalbudget.controller;
-
-
 import budget.mypersonalbudget.core.domain.Transaction;
 import budget.mypersonalbudget.core.domain.TransactionCategoryEnum;
 import budget.mypersonalbudget.dto.DashboardDto;
@@ -19,7 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -35,7 +33,7 @@ public class DashboardController {
     public String showDashboard(Model model) {
         if (!model.containsAttribute("transaction")) {
             TransactionDto transactionDto = new TransactionDto();
-            transactionDto.setDate(LocalDateTime.now());
+            transactionDto.setDate(LocalDate.now());
             model.addAttribute("transaction", transactionDto);
         }
 
@@ -129,7 +127,7 @@ public class DashboardController {
         }
 
         if (transaction.getDate() == null) {
-            transaction.setDate(LocalDateTime.now());
+            transaction.setDate(LocalDate.now());
         }
 
         budgetService.save(transactionDtoMapper.toTransaction(transaction));

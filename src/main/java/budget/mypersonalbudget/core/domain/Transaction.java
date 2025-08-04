@@ -4,7 +4,7 @@ import lombok.Builder;
 import lombok.Getter;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.UUID;
 
 @Builder
@@ -14,7 +14,7 @@ public class Transaction {
     private BigDecimal amount;
     private String description;
     private TransactionCategoryEnum category;
-    private LocalDateTime date;
+    private LocalDate date;
     private TransactionTypeEnum type;
 
     public UUID getId() {

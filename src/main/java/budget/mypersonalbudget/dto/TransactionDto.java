@@ -2,14 +2,13 @@ package budget.mypersonalbudget.dto;
 
 import budget.mypersonalbudget.core.domain.TransactionCategoryEnum;
 import budget.mypersonalbudget.core.domain.TransactionTypeEnum;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.UUID;
 
 @Setter
@@ -33,8 +32,8 @@ public class TransactionDto {
     private String description;
     
     @NotNull(message = "Date is required")
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
-    private LocalDateTime date;
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    private LocalDate date;
 }
 
 

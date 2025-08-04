@@ -6,7 +6,8 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+
 import java.util.UUID;
 
 @Entity
@@ -36,5 +37,5 @@ public class TransactionEntity {
     
     private String description;
     
-    private LocalDateTime date;
+    private LocalDate date;
 }
