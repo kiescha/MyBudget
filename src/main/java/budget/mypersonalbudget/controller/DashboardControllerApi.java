@@ -40,6 +40,7 @@ public class DashboardControllerApi {
             @RequestBody Transaction transaction) {
 
         if (budgetService.getTransactionOptionalById(id).isPresent()) {
+            transaction.setId(id);
             budgetService.updateTransaction(transaction);
             return ResponseEntity.of(budgetService.getTransactionOptionalById(id));
         }
