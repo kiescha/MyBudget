@@ -23,18 +23,15 @@ import java.io.IOException;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
 @Component
 public class JwtRequestFilter extends OncePerRequestFilter {
 
     private static final Logger log = LoggerFactory.getLogger(JwtRequestFilter.class);
 
-    @Autowired
-    private JwtUtils jwtUtils;
 
-    @Autowired
-    private MyUserDetailsService myUserDetailsService;
+    private final JwtUtils jwtUtils;
+    private final MyUserDetailsService myUserDetailsService;
 
 
 
