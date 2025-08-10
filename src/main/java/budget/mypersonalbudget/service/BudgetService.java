@@ -64,5 +64,19 @@ public class BudgetService {
         return transaction;
     }
 
-    ;
+    public List<Transaction> getAllTransactionsByBudget(Long budgetId) {
+        return budgetRepository.findAllByBudgetId(budgetId);
+    }
+    public Transaction createTransactionInBudget(Transaction tx, Long budgetId) {
+        budgetRepository.saveWithBudget(tx, budgetId);
+        return tx;
+    }
+    public void updateTransactionInBudget(Transaction tx, Long budgetId) {
+        budgetRepository.updateWithBudget(tx, budgetId);
+    }
+    public void deleteTransactionInBudget(UUID txId, Long budgetId) {
+        budgetRepository.deleteInBudget(txId, budgetId);
+    }
+
+
 }

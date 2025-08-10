@@ -38,4 +38,7 @@ public class TransactionEntity {
     private String description;
     
     private LocalDate date;
+
+    @Column(name = "budget_id", nullable = true)
+    private Long budgetId;
 }
